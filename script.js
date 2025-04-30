@@ -9,8 +9,6 @@ let hitPosition;
 let timerId;
 let emojiSpeed = 1000; // velocità iniziale dell'emoji
 
-// commento da eliminare
-
 function randomSquare() {
     // Puliamo tutti i quadrati
     squares.forEach((square) => {
@@ -56,18 +54,33 @@ difficultySelector.addEventListener('change', () => {
     const difficulty = difficultySelector.value;
     if (difficulty === 'easy') {
         emojiSpeed = 1000; // 1 secondo
+        clearInterval(timerId);
+        moveEmoji();
     } else if (difficulty === 'medium') {
         emojiSpeed = 500; // 0.7 secondi
+        clearInterval(timerId);
+        moveEmoji();
     } else if (difficulty === 'hard') {
-        emojiSpeed = 400; // 0.4 secondi
-    }
+        emojiSpeed = 1000; // Inizia da 1 secondo
+        clearInterval(timerId);
+        moveEmoji();
 
-    // ricomincia il movimento delle emoji con la nuova velocità
+        // Riduci la velocità ogni secondo
+        const hardModeInterval = setInterval(() => {
+            if (emojiSpeed > 14) {
+                emojiSpeed -= 14; // Riduci la velocità di 14ms
+                clearInterval(timerId); // Ferma il movimento corrente
+                moveEmoji(); // Riavvia il movimento con la nuova velocità
+            } else {
+                clearInterval(hardModeInterval); // Ferma la riduzione quando raggiunge il limite
+            }
+        }, 1000); // Riduzione ogni secondo
+    }
 });
 
 function moveEmoji() {
-    clearInterval(timerId); // ferma il timer precedente
-    timerId = setInterval(randomSquare, emojiSpeed); // usa la velocità aggiornata
+    clearInterval(timerId); // Ferma il timer precedente
+    timerId = setInterval(randomSquare, emojiSpeed); // Usa la velocità aggiornata
 }
 
 // Inizializza il gioco
