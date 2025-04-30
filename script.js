@@ -67,7 +67,7 @@ difficultySelector.addEventListener('change', () => {
 
         // Riduci la velocità ogni secondo
         const hardModeInterval = setInterval(() => {
-            if (emojiSpeed > 14) {
+            if (emojiSpeed >200) {
                 emojiSpeed -= 14; // Riduci la velocità di 14ms
                 clearInterval(timerId); // Ferma il movimento corrente
                 moveEmoji(); // Riavvia il movimento con la nuova velocità
